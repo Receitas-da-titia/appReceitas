@@ -28,16 +28,6 @@ Um aplicativo simples e intuitivo para salvar, organizar e acessar suas receitas
 
 ---
 
-## 🚀 Tecnologias Utilizadas
-
-- React / React Native *(ou outra stack usada)*
-- TypeScript
-- Styled Components / TailwindCSS
-- Context API / Redux
-- API de receitas
-
----
-
 ## 📦 Instalação
 
 Clone o projeto:
