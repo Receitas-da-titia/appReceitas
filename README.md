@@ -28,35 +28,6 @@ Um aplicativo simples e intuitivo para salvar, organizar e acessar suas receitas
 
 ---
 
-## 📦 Instalação
-
-Clone o projeto:
-
-```bash
-git clone https://github.com/seu-usuario/app-receitas.git
-```
-
-Acesse a pasta:
-
-```bash
-cd app-receitas
-```
-
-Instale as dependências:
-
-```bash
-npm install
-```
-
-Execute o projeto:
-
-```bash
-npm run dev
-```
-
----
-
-
 ## ❤️ Como Favoritar uma Receita
 
 1. Abra uma receita
