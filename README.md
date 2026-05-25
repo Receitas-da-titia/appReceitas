@@ -73,9 +73,3 @@ git push origin minha-feature
 ## 📄 Licença
 
 Este projeto está sob a licença MIT.
-
----
-
-## 👨‍💻 Autor
-
-Desenvolvido por **Seu Nome** 🚀
