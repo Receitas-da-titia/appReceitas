@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>appreceita - Em Construção</title>
+</head>
+<body>
+   <!DOCTYPE html>
+<html lang="pt-br"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="baseLayout :: head"></head>
+
+<body>
+
+<h1 th:text="#{app.title}">DevTech Store</h1>
+
+<p th:text="#{app.description}">
+Descrição da aplicação
+</p>
+
+<hr>
+
+<h2 th:text="${tituloPagina}">
+Título
+</h2>
+
+<p>
+Categorias cadastradas:
+<span th:text="${totalCategorias}"></span>
+</p>
+
+<p>
+Destaque:
+<span th:text="${destaque}"></span>
+</p>
+
+<footer th:replace="~{baseLayout :: footer}"></footer>
+
+</body>
+</html>
