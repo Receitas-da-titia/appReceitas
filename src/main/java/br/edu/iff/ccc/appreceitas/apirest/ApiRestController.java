@@ -1,4 +1,4 @@
-package br.edu.iff.ccc.appreceita.apirest;
+package br.edu.iff.ccc.appreceitas.apirest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

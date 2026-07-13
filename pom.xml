@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.edu.iff.ccc</groupId>
-	<artifactId>appreceita</artifactId>
+	<artifactId>appreceitas</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>

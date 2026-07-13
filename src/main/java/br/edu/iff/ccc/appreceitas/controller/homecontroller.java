@@ -1,4 +1,4 @@
-package br.edu.iff.ccc.appreceita.controller;
+package br.edu.iff.ccc.appreceitas.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

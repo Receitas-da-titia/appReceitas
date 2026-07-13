@@ -1,13 +1,13 @@
-package br.edu.iff.ccc.appreceita;
+package br.edu.iff.ccc.appreceitas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class appreceitaApplication {
+public class appreceitasApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(appreceitaApplication.class, args);
+		SpringApplication.run(appreceitasApplication.class, args);
 	}
 
 }

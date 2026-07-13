@@ -1,10 +1,10 @@
-package br.edu.iff.ccc.appreceita;
+package br.edu.iff.ccc.appreceitas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class appreceitaApplicationTests {
+class appreceitasApplicationTests {
 
 	@Test
 	void contextLoads() {
