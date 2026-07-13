@@ -4,9 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-/**
- * Controller responsável pela página inicial da aplicação.
- */
+
+//Controller responsável pela página inicial da aplicação.
+
 @Controller
 public class HomeController {
 
