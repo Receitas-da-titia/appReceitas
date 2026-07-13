@@ -1,110 +1,112 @@
-# 🍲 App de Receitas Favoritadas
+# 🛍️ DevTech
 
-Um aplicativo simples e intuitivo para salvar, organizar e acessar suas receitas favoritas em qualquer momento.
+## 📌 Sobre o Projeto
 
----
+O projeto desenvolvido pela **DevTech** tem como objetivo criar um sistema simples, eficiente e intuitivo para pequenas empresas realizarem vendas online.
 
-## ✨ Funcionalidades
+O sistema foi pensado para atender um único lojista, permitindo o gerenciamento de produtos, estoque e pedidos realizados pelos clientes.
 
-- 🔍 Buscar receitas
-- ❤️ Adicionar receitas aos favoritos
-- 📂 Organizar receitas por categorias
-- 📝 Visualizar detalhes da receita
-- ⏱️ Informações de preparo e tempo
-- 📱 Interface responsiva
-- 🌙 Suporte a tema claro/escuro *(opcional)*
+Além disso, o sistema oferece uma experiência prática para os consumidores realizarem compras através de um carrinho virtual.
 
 ---
 
-## 🖼️ Preview
+# 🚀 Funcionalidades
 
-```txt
-📖 Lista de Receitas
-├── 🍝 Lasanha
-├── 🍰 Bolo de Chocolate
-├── 🥗 Salada Caesar
-└── 🍔 Hambúrguer Artesanal
-```
+## 👨‍💼 Área Administrativa (Admin)
 
----
-
-## 📦 Instalação
-
-Clone o projeto:
-
-```bash
-git clone https://github.com/seu-usuario/app-receitas.git
-```
-
-Acesse a pasta:
-
-```bash
-cd app-receitas
-```
-
-Instale as dependências:
-
-```bash
-npm install
-```
-
-Execute o projeto:
-
-```bash
-npm run dev
-```
+- Cadastro de produtos
+- Atualização de estoque
+- Controle de categorias
+- Gerenciamento de pedidos
+- Validação de estoque disponível
+- Controle de produtos vendidos
 
 ---
 
+## 👤 Área do Cliente
 
-## ❤️ Como Favoritar uma Receita
-
-1. Abra uma receita
-2. Clique no ícone ❤️
-3. A receita será salva na sua lista de favoritos
-
----
-
-## 📌 Funcionalidades Futuras
-
-- ✅ Login de usuários
-- ✅ Sincronização na nuvem
-- ✅ Compartilhamento de receitas
-- ✅ Upload de receitas próprias
+- Visualização de produtos
+- Filtro por categorias
+- Carrinho de compras
+- Finalização de pedidos
+- Histórico de pedidos realizados
 
 ---
 
-## 🤝 Contribuição
+# 🧠 Lógica Central do Sistema
 
-Contribuições são bem-vindas!
+O funcionamento principal do sistema é baseado na relação entre:
 
-1. Faça um fork do projeto
-2. Crie uma branch:
+- Cliente
+- Pedido
+- Produtos
 
-```bash
-git checkout -b minha-feature
-```
+Cada pedido realizado associa um cliente a vários produtos.
 
-3. Commit suas alterações:
+Ao finalizar um pedido:
 
-```bash
-git commit -m "feat: minha nova feature"
-```
-
-4. Envie para o repositório:
-
-```bash
-git push origin minha-feature
-```
+✔️ O sistema realiza automaticamente a baixa no estoque  
+✔️ O pedido é armazenado no histórico do cliente  
+✔️ Os produtos são vinculados ao pedido realizado
 
 ---
 
-## 📄 Licença
+# 📋 Requisitos Funcionais
 
-Este projeto está sob a licença MIT.
+- Cadastro de produtos com validação de estoque
+- Listagem de produtos com filtros por categoria
+- Carrinho de compras
+- Fechamento de pedidos
+- Histórico de pedidos do cliente
 
 ---
 
-## 👨‍💻 Autor
+# 🛠️ Tecnologias Utilizadas
 
-Desenvolvido por **Seu Nome** 🚀
+As tecnologias podem variar conforme a evolução do projeto.
+
+- HTML5
+- CSS3
+- JavaScript
+- Java
+- MySQL
+
+---
+
+# 🏢 Sobre a DevTech
+
+A **DevTech** é uma organização focada no desenvolvimento de sistemas para pequenas empresas, buscando criar soluções modernas, acessíveis e eficientes para melhorar a gestão comercial e facilitar processos do dia a dia.
+
+---
+
+# 🎯 Objetivo do Sistema
+
+O sistema busca:
+
+- Melhorar a organização da loja
+- Automatizar o controle de estoque
+- Facilitar o processo de vendas
+- Melhorar a experiência do cliente
+- Reduzir erros manuais
+
+---
+
+# 📈 Futuras Melhorias
+
+- Sistema de pagamentos online
+- Dashboard administrativo
+- Relatórios financeiros
+- Notificações automáticas
+- Versão mobile responsiva
+
+---
+
+# 👨‍💻 Equipe
+
+Projeto desenvolvido pela organização **DevTech**.
+
+---
+
+# 📄 Licença
+
+Esse projeto utiliza a liensa MIT.
