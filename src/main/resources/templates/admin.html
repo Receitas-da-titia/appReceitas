@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#923f2a',
+                        'primary-dark': '#6b2d1c',
+                        surface: '#fdf9f0',
+                        'surface-alt': '#f7f3ea',
+                        'on-surface': '#1c1c17',
+                        'on-surface-variant': '#55423e',
+                        accent: '#a03e40',
+                    },
+                    fontFamily: {
+                        serif: ['Literata', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fdf9f0; }
+        h1, h2, h3 { font-family: 'Literata', serif; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-surface text-on-surface font-sans">
+    <div th:replace="~{layout-base :: header}"></div>
+
+    <main class="flex-grow max-w-5xl mx-auto px-6 py-10">
+        <div class="mb-8">
+            <h1 class="font-serif text-4xl font-bold text-primary">⚙️ Painel Administrativo</h1>
+            <p class="text-on-surface-variant mt-1">Gerencie as receitas, categorias e ingredientes</p>
+        </div>
+
+        <!-- STATS -->
+        <div class="grid md:grid-cols-3 gap-6 mb-10">
+            <div class="bg-gradient-to-br from-primary to-primary-dark text-white rounded-2xl p-6 shadow-sm">
+                <div class="text-5xl font-bold" th:text="${totalReceitas}">0</div>
+                <div class="mt-1 opacity-90">📖 Receitas</div>
+            </div>
+            <div class="bg-gradient-to-br from-green-700 to-green-500 text-white rounded-2xl p-6 shadow-sm">
+                <div class="text-5xl font-bold" th:text="${totalCategorias}">0</div>
+                <div class="mt-1 opacity-90">🏷️ Categorias</div>
+            </div>
+            <div class="bg-gradient-to-br from-orange-600 to-orange-400 text-white rounded-2xl p-6 shadow-sm">
+                <div class="text-5xl font-bold" th:text="${totalIngredientes}">0</div>
+                <div class="mt-1 opacity-90">🥕 Ingredientes</div>
+            </div>
+        </div>
+
+        <!-- AÇÕES -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <h2 class="font-serif text-2xl font-bold text-primary mb-4">Gerenciamento</h2>
+            <div class="space-y-3">
+                <a th:href="@{/admin/categorias}" class="flex justify-between items-center p-4 rounded-lg bg-surface-alt hover:bg-gray-100 transition">
+                    <span class="font-semibold">🏷️ Gerenciar Categorias</span>
+                    <span class="text-primary font-semibold">Acessar →</span>
+                </a>
+                <a th:href="@{/admin/ingredientes}" class="flex justify-between items-center p-4 rounded-lg bg-surface-alt hover:bg-gray-100 transition">
+                    <span class="font-semibold">🥕 Gerenciar Ingredientes</span>
+                    <span class="text-primary font-semibold">Acessar →</span>
+                </a>
+                <a th:href="@{/receitas}" class="flex justify-between items-center p-4 rounded-lg bg-surface-alt hover:bg-gray-100 transition">
+                    <span class="font-semibold">📖 Ver todas as receitas</span>
+                    <span class="text-primary font-semibold">Acessar →</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{layout-base :: footer}"></div>
+</body>
+</html>

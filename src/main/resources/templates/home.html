@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receitas da Titia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#923f2a',
+                        'primary-dark': '#6b2d1c',
+                        surface: '#fdf9f0',
+                        'surface-alt': '#f7f3ea',
+                        'on-surface': '#1c1c17',
+                        'on-surface-variant': '#55423e',
+                        accent: '#a03e40',
+                    },
+                    fontFamily: {
+                        serif: ['Literata', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="flex flex-col min-h-screen bg-surface text-on-surface font-sans">
+    
+    <div th:replace="~{layout-base :: header}"></div>
+
+    <main class="flex-grow max-w-6xl mx-auto px-6 py-12 w-full">
+        <section class="bg-surface-alt rounded-3xl p-12 text-center mb-12 border border-gray-200">
+            <h1 class="font-serif text-5xl font-bold text-primary mb-4" th:text="${tituloPagina}">Receitas da Titia</h1>
+            <p class="text-lg text-on-surface-variant mb-6" th:text="${destaque}">O sabor de casa em cada página.</p>
+            <div class="inline-block bg-white px-4 py-2 rounded-full shadow-sm">
+                <span class="text-on-surface-variant">📚 <strong th:text="${totalCategorias}">0</strong> categorias cadastradas</span>
+            </div>
+        </section>
+
+        <section class="grid md:grid-cols-2 gap-6 mb-12 max-w-3xl mx-auto">
+            <a th:href="@{/receitas}" class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition border border-gray-100 text-center">
+                <div class="text-4xl mb-2">📖</div>
+                <h3 class="text-xl font-bold text-primary mb-1">Receitas</h3>
+                <p class="text-sm text-on-surface-variant">Veja todas as receitas disponíveis</p>
+            </a>
+            <a th:href="@{/favoritos}" class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition border border-gray-100 text-center">
+                <div class="text-4xl mb-2">❤️</div>
+                <h3 class="text-xl font-bold text-accent mb-1">Favoritos</h3>
+                <p class="text-sm text-on-surface-variant">Suas receitas salvas</p>
+            </a>
+        </section>
+    </main>
+
+    <div th:replace="~{layout-base :: footer}"></div>
+</body>
+</html>

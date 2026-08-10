@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Categorias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#923f2a',
+                        'primary-dark': '#6b2d1c',
+                        surface: '#fdf9f0',
+                        'surface-alt': '#f7f3ea',
+                        'on-surface': '#1c1c17',
+                        'on-surface-variant': '#55423e',
+                    },
+                    fontFamily: {
+                        serif: ['Literata', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fdf9f0; }
+        h1, h2, h3 { font-family: 'Literata', serif; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-surface text-on-surface font-sans">
+    <div th:replace="~{layout-base :: header}"></div>
+
+    <main class="flex-grow max-w-5xl mx-auto px-6 py-10">
+        <h2 class="font-serif text-4xl font-bold text-primary mb-6">🏷️ Gerenciar Categorias</h2>
+
+        <!-- ADICIONAR -->
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
+            <h3 class="font-serif text-xl font-bold text-on-surface mb-4">Adicionar Nova Categoria</h3>
+            <form th:action="@{/admin/categorias}" th:object="${categoriaDTO}" method="post" class="flex gap-3">
+                <input type="text" th:field="*{nomeCategoria}" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary" placeholder="Nome da categoria" required>
+                <button type="submit" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-primary-dark transition">➕ Adicionar</button>
+            </form>
+        </div>
+
+        <!-- LISTA -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="bg-primary text-white px-6 py-4">
+                <h3 class="font-serif text-xl font-bold">Categorias Cadastradas</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-surface-alt">
+                        <tr>
+                            <th class="text-left px-6 py-3 text-sm font-semibold text-on-surface-variant">ID</th>
+                            <th class="text-left px-6 py-3 text-sm font-semibold text-on-surface-variant">Nome</th>
+                            <th class="text-right px-6 py-3 text-sm font-semibold text-on-surface-variant">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${categorias}" class="border-t border-gray-100 hover:bg-surface-alt transition">
+                            <td class="px-6 py-4">
+                                <span class="bg-gray-200 text-on-surface px-2 py-1 rounded text-xs font-semibold" th:text="${c.idCategoria}">1</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <form th:action="@{'/admin/categorias/' + ${c.idCategoria} + '/editar'}" method="post" class="flex gap-2">
+                                    <input type="text" name="nomeCategoria" th:value="${c.nomeCategoria}" class="flex-1 px-3 py-1 border border-gray-300 rounded-lg text-sm" required>
+                                    <button type="submit" class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold hover:bg-yellow-600 transition">💾 Salvar</button>
+                                </form>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <form th:action="@{'/admin/categorias/' + ${c.idCategoria} + '/excluir'}" method="post" class="inline" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                                    <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold hover:bg-red-700 transition">🗑️ Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(categorias)}">
+                            <td colspan="3" class="text-center py-8 text-on-surface-variant italic">Nenhuma categoria cadastrada ainda.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <a th:href="@{/admin}" class="inline-block mt-6 text-on-surface-variant hover:text-primary transition">← Voltar ao Painel</a>
+    </main>
+
+    <div th:replace="~{layout-base :: footer}"></div>
+</body>
+</html>
