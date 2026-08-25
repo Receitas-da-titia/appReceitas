@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${tituloPagina} ?: 'Receitas da Titia'">Receitas da Titia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#923f2a',
+                        'primary-dark': '#6b2d1c',
+                        surface: '#fdf9f0',
+                        'surface-alt': '#f7f3ea',
+                        'on-surface': '#1c1c17',
+                        'on-surface-variant': '#55423e',
+                        accent: '#a03e40',
+                    },
+                    fontFamily: {
+                        serif: ['Literata', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1 0 auto; 
+        }
+        footer {
+            flex-shrink: 0; 
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-sans">
+
+<!-- HEADER -->
+<header th:fragment="header" class="bg-surface/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
+    <nav class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+        <a th:href="@{/}" class="font-serif text-2xl font-bold text-primary"> Receitas da Titia</a>
+        <div class="flex gap-6 items-center">
+            <a th:href="@{/}" class="text-on-surface-variant hover:text-primary transition">Início</a>
+            <a th:href="@{/receitas}" class="text-on-surface-variant hover:text-primary transition">Receitas</a>
+            <a th:href="@{/favoritos}" class="text-on-surface-variant hover:text-primary transition">Favoritos</a>
+            <a th:href="@{/admin}" class="text-on-surface-variant hover:text-primary transition">Admin</a>
+            <a th:href="@{/login}" class="bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-primary-dark transition">Entrar</a>
+        </div>
+    </nav>
+</header>
+
+<!-- FOOTER -->
+<footer th:fragment="footer" class="bg-surface-alt border-t border-gray-200 py-6">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+        <p class="font-serif text-lg text-primary font-bold mb-1"> Receitas da Titia</p>
+        <p class="text-xs text-on-surface-variant">© 2026 - Feito com carinho para sua cozinha</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Favoritos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#923f2a',
+                        'primary-dark': '#6b2d1c',
+                        surface: '#fdf9f0',
+                        'surface-alt': '#f7f3ea',
+                        'on-surface': '#1c1c17',
+                        'on-surface-variant': '#55423e',
+                        accent: '#a03e40',
+                    },
+                    fontFamily: {
+                        serif: ['Literata', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fdf9f0; }
+        h1, h2, h3 { font-family: 'Literata', serif; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-surface text-on-surface font-sans">
+    <div th:replace="~{layout-base :: header}"></div>
+
+    <main class="flex-grow max-w-6xl mx-auto px-6 py-10">
+        <h2 class="font-serif text-4xl font-bold text-primary mb-8">❤️ Minhas Receitas Favoritas</h2>
+
+        <div class="grid md:grid-cols-3 gap-6">
+            <div th:each="entry : ${favoritosComReceita}" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
+                <h3 class="font-serif text-xl font-bold text-on-surface mb-3" th:text="${entry.value.nome}">Nome da Receita</h3>
+                <div class="flex gap-2 mt-4">
+                    <a th:href="@{'/receitas/' + ${entry.value.idReceita}}" class="flex-1 text-center bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-primary-dark transition">Ver detalhes</a>
+                    <form th:action="@{'/favoritos/' + ${entry.key.idFavorito} + '/remover'}" method="post" onsubmit="return confirm('Remover dos favoritos?');">
+                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-red-700 transition">🗑️</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${#maps.isEmpty(favoritosComReceita)}" class="text-center py-16">
+            <div class="text-6xl mb-4">💔</div>
+            <h3 class="text-xl text-on-surface-variant mb-4">Você ainda não tem receitas favoritas</h3>
+            <a th:href="@{/receitas}" class="inline-block bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-primary-dark transition">Explorar receitas</a>
+        </div>
+    </main>
+
+    <div th:replace="~{layout-base :: footer}"></div>
+</body>
+</html>
