@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${modoEdicao} ? 'Editar Receita' : 'Nova Receita'">Formulário</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#923f2a',
+                        'primary-dark': '#6b2d1c',
+                        surface: '#fdf9f0',
+                        'surface-alt': '#f7f3ea',
+                        'on-surface': '#1c1c17',
+                        'on-surface-variant': '#55423e',
+                    },
+                    fontFamily: {
+                        serif: ['Literata', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fdf9f0; }
+        h1, h2, h3 { font-family: 'Literata', serif; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-surface text-on-surface font-sans">
+    <div th:replace="~{layout-base :: header}"></div>
+
+    <main class="flex-grow max-w-3xl mx-auto px-6 py-10">
+        <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+            <h2 class="text-3xl font-bold text-primary mb-6" th:text="${modoEdicao} ? '✏️ Editar Receita' : '➕ Nova Receita'">Formulário</h2>
+            <hr class="mb-6">
+
+            <form th:action="${modoEdicao} ? @{'/receitas/' + ${id} + '/editar'} : @{'/receitas/nova'}" 
+                  th:object="${receitaDTO}" method="post" class="space-y-5">
+                
+                <div>
+                    <label class="block text-sm font-semibold text-on-surface-variant mb-1">Nome da Receita</label>
+                    <input type="text" th:field="*{nome}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-on-surface-variant mb-1">Tempo de Preparo (min)</label>
+                        <input type="number" th:field="*{tempoPreparo}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-on-surface-variant mb-1">Categoria</label>
+                        <select name="idCategoria" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option th:each="cat : ${categorias}" 
+                                    th:value="${cat.idCategoria}" 
+                                    th:text="${cat.nomeCategoria}"
+                                    th:selected="${receitaDTO.idCategoria != null and receitaDTO.idCategoria == cat.idCategoria}">
+                                Categoria
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-on-surface-variant mb-1">URL da Imagem (opcional)</label>
+                    <input type="text" th:field="*{imagem}" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="https://...">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-on-surface-variant mb-1">Modo de Preparo</label>
+                    <textarea th:field="*{modoPreparo}" class="w-full px-4 py-2 border border-gray-300 rounded-lg" rows="5" required></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-on-surface-variant mb-1">
+                        Ingredientes (segure Ctrl/Cmd para selecionar vários)
+                    </label>
+                    <select name="idsIngredientes" multiple size="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                        <option th:each="ing : ${ingredientes}" 
+                                th:value="${ing.idIngrediente}" 
+                                th:text="${ing.nomeIngrediente}">
+                            Ingrediente
+                        </option>
+                    </select>
+                    <p class="text-xs text-on-surface-variant mt-1">💡 Se não aparecer nada, cadastre ingredientes em Admin primeiro.</p>
+                </div>
+
+                <div class="flex gap-3 pt-4">
+                    <button type="submit" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-primary-dark transition" 
+                            th:text="${modoEdicao} ? '💾 Salvar' : '➕ Cadastrar'">Salvar</button>
+                    <a th:href="@{/receitas}" class="bg-gray-200 text-on-surface px-6 py-2 rounded-full font-semibold hover:bg-gray-300 transition">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <div th:replace="~{layout-base :: footer}"></div>
+</body>
+</html>
