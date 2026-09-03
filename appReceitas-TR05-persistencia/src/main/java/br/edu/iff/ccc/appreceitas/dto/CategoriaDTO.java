@@ -4,8 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class CategoriaDTO {
-
-    private String nomeCategoria;
+    @NotBlank(message = "O nome da categoria é obrigatório")
+    @Size(min = 2, max = 60, message = "O nome deve ter entre 2 e 60 caracteres")
+        private String nomeCategoria;
 
     public CategoriaDTO() {
     }
@@ -17,8 +18,4 @@ public class CategoriaDTO {
     public void setNomeCategoria(String nomeCategoria) {
         this.nomeCategoria = nomeCategoria;
     }
-
-    @NotBlank(message = "O nome da categoria é obrigatório")
-    @Size(min = 2, max = 60, message = "O nome deve ter entre 2 e 60 caracteres")
-    private String nomeCategoria;
 }

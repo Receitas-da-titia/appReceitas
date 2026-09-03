@@ -44,25 +44,27 @@
                 
                 <div>
                     <label class="block text-sm font-semibold text-on-surface-variant mb-1">Nome da Receita</label>
-                    <input type="text" th:field="*{nome}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
+                    <input type="text" th:field="*{nome}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <p th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="text-red-600 text-xs mt-1"></p>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-on-surface-variant mb-1">Tempo de Preparo (min)</label>
-                        <input type="number" th:field="*{tempoPreparo}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary" required>
+                        <input type="number" th:field="*{tempoPreparo}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary">
+                        <p th:if="${#fields.hasErrors('tempoPreparo')}" th:errors="*{tempoPreparo}" class="text-red-600 text-xs mt-1"></p>
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-on-surface-variant mb-1">Categoria</label>
-                        <select name="idCategoria" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary" required>
+                        <select th:field="*{idCategoria}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary">
                             <option value="">Selecione uma categoria</option>
                             <option th:each="cat : ${categorias}" 
                                     th:value="${cat.idCategoria}" 
-                                    th:text="${cat.nomeCategoria}"
-                                    th:selected="${receitaDTO.idCategoria != null and receitaDTO.idCategoria == cat.idCategoria}">
+                                    th:text="${cat.nomeCategoria}">
                                 Categoria
                             </option>
                         </select>
+                        <p th:if="${#fields.hasErrors('idCategoria')}" th:errors="*{idCategoria}" class="text-red-600 text-xs mt-1"></p>
                     </div>
                 </div>
 
@@ -73,20 +75,22 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-on-surface-variant mb-1">Modo de Preparo</label>
-                    <textarea th:field="*{modoPreparo}" class="w-full px-4 py-2 border border-gray-300 rounded-lg" rows="5" required></textarea>
+                    <textarea th:field="*{modoPreparo}" class="w-full px-4 py-2 border border-gray-300 rounded-lg" rows="5"></textarea>
+                    <p th:if="${#fields.hasErrors('modoPreparo')}" th:errors="*{modoPreparo}" class="text-red-600 text-xs mt-1"></p>
                 </div>
 
                 <div>
                     <label class="block text-sm font-semibold text-on-surface-variant mb-1">
                         Ingredientes (segure Ctrl/Cmd para selecionar vários)
                     </label>
-                    <select name="idsIngredientes" multiple size="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <select th:field="*{idsIngredientes}" multiple size="6" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                         <option th:each="ing : ${ingredientes}" 
                                 th:value="${ing.idIngrediente}" 
                                 th:text="${ing.nomeIngrediente}">
                             Ingrediente
                         </option>
                     </select>
+                    <p th:if="${#fields.hasErrors('idsIngredientes')}" th:errors="*{idsIngredientes}" class="text-red-600 text-xs mt-1"></p>
                     <p class="text-xs text-on-surface-variant mt-1">💡 Se não aparecer nada, cadastre ingredientes em Admin primeiro.</p>
                 </div>
 

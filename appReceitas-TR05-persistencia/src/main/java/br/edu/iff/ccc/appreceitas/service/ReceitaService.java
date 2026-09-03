@@ -5,6 +5,7 @@ import br.edu.iff.ccc.appreceitas.model.Receita;
 import br.edu.iff.ccc.appreceitas.repository.ReceitaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import br.edu.iff.ccc.appreceitas.exception. *;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,9 @@ public class ReceitaService {
     private ReceitaRepository receitaRepository;
 
     public Receita cadastrar(ReceitaDTO dto) {
+        if (receitaRepository.existsByNomeIgnoreCase(dto.getNome())) {
+            throw new EntidadeDuplicadaException("Já existe uma receita com o nome '" + dto.getNome() + "'");
+        }
         Receita receita = new Receita();
         receita.setNome(dto.getNome());
         receita.setModoPreparo(dto.getModoPreparo());
@@ -27,9 +31,15 @@ public class ReceitaService {
         return receitaRepository.save(receita);
     }
 
+    public Receita buscarPorIdOuFalhar(Long id) {
+    return receitaRepository.findById(id)
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Receita não encontrada com o id: " + id));
+    }
     public Receita atualizar(Long id, ReceitaDTO dto) {
-        Receita receita = receitaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Receita não encontrada"));
+        Receita receita = buscarPorIdOuFalhar(id);
+            if (receitaRepository.findByNomeIgnoreCaseAndIdReceitaNot(dto.getNome(), id).isPresent()) {
+                throw new EntidadeDuplicadaException("Já existe outra receita com o nome '" + dto.getNome() + "'");
+            }
         receita.setNome(dto.getNome());
         receita.setModoPreparo(dto.getModoPreparo());
         receita.setTempoPreparo(dto.getTempoPreparo());
@@ -40,6 +50,7 @@ public class ReceitaService {
     }
 
     public void excluir(Long id) {
+        buscarPorIdOuFalhar(id);
         receitaRepository.deleteById(id);
     }
 

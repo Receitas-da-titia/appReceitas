@@ -1,8 +1,12 @@
 package br.edu.iff.ccc.appreceitas.dto;
 
-public class IngredienteDTO {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-    private String nomeIngrediente;
+public class IngredienteDTO {
+    @NotBlank(message = "O nome do ingrediente é obrigatório")
+    @Size(min = 2, max = 60, message = "O nome deve ter entre 2 e 60 caracteres")
+        private String nomeIngrediente;
 
     public IngredienteDTO() {
     }
