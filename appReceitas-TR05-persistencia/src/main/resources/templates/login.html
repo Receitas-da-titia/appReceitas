@@ -44,17 +44,19 @@
 
             <div th:if="${erro}" class="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 rounded mb-4 text-sm" th:text="${erro}"></div>
 
-            <form th:action="@{/login}" method="post" class="space-y-4">
-                <div>
-                    <label for="email" class="block text-sm font-semibold text-on-surface-variant mb-1">E-mail</label>
-                    <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" required>
-                </div>
-                <div>
-                    <label for="senha" class="block text-sm font-semibold text-on-surface-variant mb-1">Senha</label>
-                    <input type="password" id="senha" name="senha" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary" required>
-                </div>
-                <button type="submit" class="w-full bg-primary text-white py-2 rounded-full font-semibold hover:bg-primary-dark transition">Entrar</button>
-            </form>
+        <form th:action="@{/login}" th:object="${loginDTO}" method="post" class="space-y-4">
+            <div>
+                <label for="email" class="block text-sm font-semibold text-on-surface-variant mb-1">E-mail</label>
+                <input type="email" id="email" th:field="*{email}" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-red-600 text-xs mt-1"></p>
+            </div>
+            <div>
+                <label for="senha" class="block text-sm font-semibold text-on-surface-variant mb-1">Senha</label>
+                <input type="password" id="senha" th:field="*{senha}" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                <p th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="text-red-600 text-xs mt-1"></p>
+            </div>
+            <button type="submit" class="w-full bg-primary text-white py-2 rounded-full font-semibold hover:bg-primary-dark transition">Entrar</button>
+        </form>
 
             <hr class="my-6">
             <p class="text-center text-sm text-on-surface-variant">

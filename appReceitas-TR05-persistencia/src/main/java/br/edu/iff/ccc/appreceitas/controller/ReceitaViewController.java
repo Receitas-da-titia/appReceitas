@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class ReceitaViewController {
@@ -64,18 +66,21 @@ public class ReceitaViewController {
     }
 
     @PostMapping("/receitas/nova")
-    public String salvarNovaReceita(@ModelAttribute ReceitaDTO receitaDTO) {
+    public String salvarNovaReceita(@Valid @ModelAttribute("receitaDTO") ReceitaDTO receitaDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categorias", categoriaService.listarTodas());
+            model.addAttribute("ingredientes", ingredienteService.listarTodos());
+            model.addAttribute("modoEdicao", false);
+            return "receitas-formulario";
+        }
         Receita receita = receitaService.cadastrar(receitaDTO);
         return "redirect:/receitas/" + receita.getIdReceita();
     }
 
-    @GetMapping("/receitas/{id}")
-    public String detalhar(@PathVariable Long id, HttpSession session, Model model) {
-    Receita receita = receitaService.buscarPorId(id)
-            .orElseThrow(() -> new IllegalArgumentException("Receita não encontrada"));
-    
+    private void carregarDetalhesReceita(Long id, HttpSession session, Model model) {
+    Receita receita = receitaService.buscarPorIdOuFalhar(id);
     model.addAttribute("receita", receita);
-    
+
     if (receita.getIdCategoria() != null) {
         model.addAttribute("categoria", categoriaService.buscarPorId(receita.getIdCategoria()).orElse(null));
     } else {
@@ -89,19 +94,21 @@ public class ReceitaViewController {
                 .toList();
     }
     model.addAttribute("ingredientes", ingredientesReceita);
-    
     model.addAttribute("comentarios", comentarioService.listarPorReceita(id));
-    model.addAttribute("comentarioDTO", new ComentarioDTO());
     model.addAttribute("usuarioLogadoId", session.getAttribute("usuarioLogadoId"));
-    
+}
+
+@GetMapping("/receitas/{id}")
+public String detalhar(@PathVariable Long id, HttpSession session, Model model) {
+    carregarDetalhesReceita(id, session, model);
+    model.addAttribute("comentarioDTO", new ComentarioDTO());
     return "receitas-detalhe";
 }
 
 
     @GetMapping("/receitas/{id}/editar")
     public String editar(@PathVariable Long id, Model model) {
-        Receita receita = receitaService.buscarPorId(id)
-                .orElseThrow(() -> new IllegalArgumentException("Receita não encontrada"));
+        Receita receita = receitaService.buscarPorIdOuFalhar(id);     
         ReceitaDTO dto = new ReceitaDTO();
         dto.setNome(receita.getNome());
         dto.setModoPreparo(receita.getModoPreparo());
@@ -118,7 +125,13 @@ public class ReceitaViewController {
     }
 
     @PostMapping("/receitas/{id}/editar")
-    public String salvarEdicao(@PathVariable Long id, @ModelAttribute ReceitaDTO receitaDTO) {
+    public String salvarEdicao(@PathVariable Long id,@Valid @ModelAttribute ReceitaDTO receitaDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categorias", categoriaService.listarTodas());
+            model.addAttribute("ingredientes", ingredienteService.listarTodos());
+            model.addAttribute("modoEdicao", true);
+            return "receitas-formulario";
+        }
         receitaService.atualizar(id, receitaDTO);
         return "redirect:/receitas/" + id;
     }
@@ -140,10 +153,17 @@ public class ReceitaViewController {
     }
 
     @PostMapping("/receitas/{id}/comentarios")
-    public String comentar(@PathVariable Long id, @ModelAttribute ComentarioDTO comentarioDTO, HttpSession session) {
+    public String comentar(@PathVariable Long id,
+                        @Valid @ModelAttribute("comentarioDTO") ComentarioDTO comentarioDTO,
+                        BindingResult bindingResult,
+                        HttpSession session, Model model) {
         Long idUsuario = (Long) session.getAttribute("usuarioLogadoId");
         if (idUsuario == null) {
             return "redirect:/login";
+        }
+        if (bindingResult.hasErrors()) {
+            carregarDetalhesReceita(id, session, model);
+            return "receitas-detalhe";
         }
         comentarioService.adicionar(idUsuario, id, comentarioDTO);
         return "redirect:/receitas/" + id;

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class AdminViewController {
@@ -41,13 +43,21 @@ public class AdminViewController {
     }
 
     @PostMapping("/admin/categorias")
-    public String salvarCategoria(@ModelAttribute CategoriaDTO categoriaDTO) {
+    public String salvarCategoria(@Valid @ModelAttribute("categoriaDTO") CategoriaDTO categoriaDTO, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("categorias", categoriaService.listarTodas());
+            return "admin-categorias";
+        }
         categoriaService.cadastrar(categoriaDTO);
         return "redirect:/admin/categorias";
     }
 
     @PostMapping("/admin/categorias/{id}/editar")
-    public String editarCategoria(@PathVariable Long id, @ModelAttribute CategoriaDTO categoriaDTO) {
+    public String editarCategoria(@PathVariable Long id, @Valid @ModelAttribute("categoriaDTO") CategoriaDTO categoriaDTO, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("categorias", categoriaService.listarTodas());
+            return "admin-categorias";
+        }
         categoriaService.atualizar(id, categoriaDTO);
         return "redirect:/admin/categorias";
     }
@@ -66,13 +76,21 @@ public class AdminViewController {
     }
 
     @PostMapping("/admin/ingredientes")
-    public String salvarIngrediente(@ModelAttribute IngredienteDTO ingredienteDTO) {
+    public String salvarIngrediente(@Valid @ModelAttribute("ingredienteDTO") IngredienteDTO ingredienteDTO, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("ingredientes", ingredienteService.listarTodos());
+            return "admin-ingredientes";
+        }
         ingredienteService.cadastrar(ingredienteDTO);
         return "redirect:/admin/ingredientes";
     }
 
     @PostMapping("/admin/ingredientes/{id}/editar")
-    public String editarIngrediente(@PathVariable Long id, @ModelAttribute IngredienteDTO ingredienteDTO) {
+    public String editarIngrediente(@PathVariable Long id, @Valid @ModelAttribute("ingredienteDTO") IngredienteDTO ingredienteDTO, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("ingredientes", ingredienteService.listarTodos());
+            return "admin-ingredientes";
+        }
         ingredienteService.atualizar(id, ingredienteDTO);
         return "redirect:/admin/ingredientes";
     }

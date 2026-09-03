@@ -3,15 +3,30 @@ package br.edu.iff.ccc.appreceitas.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class ReceitaDTO {
 
-    private String nome;
-    private String modoPreparo;
-    private int tempoPreparo;
-    private String imagem;
-    private Long idCategoria;
+    @NotEmpty(message = "Receita deve ter pelo menos um ingrediente")
     private List<Long> idsIngredientes = new ArrayList<>();
+    
+    @NotBlank(message = "Informe o nome da receita")
+    private String nome;
 
+    @NotBlank(message = "Informe o modo de preparo da receita")
+    private String modoPreparo;
+    
+    @Min(value = 1, message = "O tempo de preparo deve ser maior que zero")
+    private int tempoPreparo;
+
+    private String imagem;
+
+    @NotNull(message = "Selecione a categoria da receita")
+    private Long idCategoria;
+    
     public ReceitaDTO() {
     }
 

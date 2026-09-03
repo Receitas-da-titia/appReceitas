@@ -11,6 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import java.util.Optional;
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+
 
 import java.util.Optional;
 
@@ -21,12 +25,16 @@ public class AutenticacaoViewController {
     private UsuarioService usuarioService;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("loginDTO", new LoginDTO());
         return "login";
     }
 
     @PostMapping("/login")
-    public String autenticar(@ModelAttribute LoginDTO loginDTO, HttpSession session, Model model) {
+    public String autenticar(@Valid @ModelAttribute("loginDTO") LoginDTO loginDTO, BindingResult bindingResult, HttpSession session, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "login";
+        }
         Optional<Usuario> usuario = usuarioService.autenticar(loginDTO);
         if (usuario.isEmpty()) {
             model.addAttribute("erro", "Email ou senha inválidos");
@@ -38,19 +46,20 @@ public class AutenticacaoViewController {
     }
 
     @GetMapping("/cadastro")
-    public String cadastro() {
+    public String cadastro(Model model) {
+        model.addAttribute("usuarioDTO", new UsuarioDTO());
         return "cadastro";
     }
 
     @PostMapping("/cadastro")
-    public String cadastrar(@ModelAttribute UsuarioDTO usuarioDTO, Model model) {
-        if (usuarioService.existeEmail(usuarioDTO.getEmail())) {
-            model.addAttribute("erro", "Já existe um usuário com esse email");
-            return "cadastro";
-        }
-        usuarioService.cadastrar(usuarioDTO);
-        return "redirect:/login";
+    public String cadastrar(@Valid @ModelAttribute("usuarioDTO") UsuarioDTO usuarioDTO, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+        return "cadastro";
     }
+    usuarioService.cadastrar(usuarioDTO);
+    return "redirect:/login";
+    }
+
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
