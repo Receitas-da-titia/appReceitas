@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{baseLayout :: head}"></head>
+
+<body>
+
+<h1 th:text="#{app.title}">Receitas da Titia</h1>
+<h2>Receitas Cadastradas</h2>
+
+<form th:action="@{/receitas}" method="get">
+    <input type="text" name="nome" placeholder="Buscar por nome" th:value="${nome}">
+    <input type="text" name="ingrediente" placeholder="Buscar por ingrediente" th:value="${ingrediente}">
+    <input type="text" name="categoria" placeholder="Buscar por categoria" th:value="${categoria}">
+    <button type="submit">Buscar</button>
+</form>
+
+<p><a th:href="@{/receitas/nova}">+ Nova Receita</a></p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Tempo de Preparo</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="receita : ${receitas}">
+        <td th:text="${receita.nome}">Nome</td>
+        <td th:text="${receita.categoria}">Categoria</td>
+        <td th:text="${receita.tempoPreparoMinutos} + ' min'">Tempo</td>
+        <td>
+            <a th:href="@{/receitas/{id}(id=${receita.id})}">Ver detalhes</a>
+            &nbsp;|&nbsp;
+            <a th:href="@{/receitas/{id}/editar(id=${receita.id})}">Editar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p th:if="${#lists.isEmpty(receitas)}">Nenhuma receita cadastrada ainda.</p>
+
+<footer th:replace="~{baseLayout :: footer}"></footer>
+
+</body>
+</html>
